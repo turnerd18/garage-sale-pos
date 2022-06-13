@@ -7,10 +7,10 @@ import { Button, FormControl, IconButton, InputAdornment, InputBase, InputLabel,
 import { CheckCircle, Close, Send } from '@mui/icons-material';
 import { grey } from '@mui/material/colors';
 
-const Item = styled(Paper)(({ theme }) => ({
+const Item = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
-  padding: theme.spacing(1),
+  // padding: theme.spacing(1),
   textAlign: 'center',
   color: theme.palette.text.secondary,
 }));
@@ -44,6 +44,8 @@ export default function App() {
   )
 
   const submitCustomValue = () => {
+    if (!customValue) return
+
     setItems([
       { person: currentPerson, value: customValue },
       ...items
@@ -51,10 +53,16 @@ export default function App() {
     setCustomValue('')
   }
 
+  const submitTransaction = () => {
+    setItems([])
+    setCustomValue('')
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ flexGrow: 1 }} height='100vh'>
-        <Stack spacing={1} direction="row" justifyContent='center'>
+
+        <Stack spacing={0} direction="row" justifyContent='center'>
           <PersonButton person='Clothes' color='error' />
           <PersonButton person='Turner' color='secondary' />
           <PersonButton person='Kim' color='success' />
@@ -62,11 +70,12 @@ export default function App() {
           <PersonButton person='Bulmer' color='warning' />
         </Stack>
 
-        <Grid container spacing={2}>
-          <Grid item xs={9}>
+        <Grid container spacing={2} marginTop='10px'>
+          <Grid item xs={8}>
+
             <Grid container spacing={1}>
               {values.map(value =>
-                <Grid item xs={4}>
+                <Grid item xs={4} key={value}>
                   <Button
                     onClick={() => setItems([
                       { person: currentPerson, value },
@@ -78,10 +87,8 @@ export default function App() {
                   </Button>
                 </Grid>)
               }
-              <Grid item xs={8}>
-
-              </Grid>
             </Grid>
+
             <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">Custom</InputLabel>
               <OutlinedInput
@@ -93,9 +100,9 @@ export default function App() {
                 onChange={event => {
                   setCustomValue(parseFloat(event.target.value))
                 }}
-                onKeyDownCapture={event => { if (event.keyCode == 13) submitCustomValue() }}
+                onKeyDownCapture={event => { if (event.keyCode === 13) submitCustomValue() }}
                 endAdornment={
-                  <InputAdornment position="end">
+                  !!customValue && <InputAdornment position="end">
                     <IconButton
                       onClick={submitCustomValue}
                       edge="end"
@@ -107,14 +114,23 @@ export default function App() {
                 }
               />
             </FormControl>
-            <Item>
+
+            <Stack spacing={2} direction="column" justifyContent='center' textAlign='center'>
               <b>Total: {formatter.format(items.reduce((sum, item) => sum + item.value, 0))}</b>
-            </Item>
+              <Button
+                variant="contained"
+                color='primary'
+                disabled={!items.length}
+                onClick={submitTransaction}>
+                Submit
+              </Button>
+            </Stack>
+
           </Grid>
 
-          <Grid item xs={3}>
+          <Grid item xs={4} sx={{ maxHeight: '95vh', overflowY: 'scroll' }}>
             {items.map((item, index) =>
-              <Item >
+              <Item key={index}>
                 {item.person} {formatter.format(item.value)}
                 <IconButton
                   color='error'

@@ -2,7 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-![alt text](https://github.com/turnerd18/garage-sale-pos/blob/main/screenshot.jpg?raw=true)
+<!-- ![alt text](https://github.com/turnerd18/garage-sale-pos/blob/main/screenshot.jpg?raw=true) -->
+<img src="https://github.com/turnerd18/garage-sale-pos/blob/main/screenshot.jpg?raw=true" width="500" style="max-width:60%"/>
 
 ## Available Scripts
 

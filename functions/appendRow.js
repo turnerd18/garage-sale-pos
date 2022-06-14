@@ -3,13 +3,13 @@ const crypto = require('crypto');
 
 
 exports.handler = async (req, res) => {
-    var jwt = getJwt();
-    var apiKey = process.env.GOOGLE_API_KEY;
-    var spreadsheetId = process.env.SPREADSHEET_ID;
-    var range = 'Transactions!A1:D';
+    const jwt = getJwt();
+    const apiKey = process.env.GOOGLE_API_KEY;
+    const spreadsheetId = process.env.SPREADSHEET_ID;
+    const range = 'Transactions!A1:D';
     const transactionId = crypto.randomUUID()
     const transactionDate = new Date()
-    var rows = req.body.items.map(item => 
+    const rows = req.body.items.map(item => 
         [transactionId, transactionDate, item.bucket, item.amount]
     )
     await appendSheetRow(jwt, apiKey, spreadsheetId, range, rows);
@@ -25,11 +25,9 @@ function getJwt() {
     );
 }
 
-function getApiKey() {
-    return process.env.GOOGLE_API_KEY
-}
-
 async function appendSheetRow(jwt, apiKey, spreadsheetId, range, rows) {
+    // Sheets API Node.JS documentation https://googleapis.dev/nodejs/googleapis/latest/sheets/classes/Resource$Spreadsheets$Values.html#append
+
     const sheets = google.sheets({ version: 'v4' });
     const valuesResponse = await sheets.spreadsheets.values.get({
         spreadsheetId, 

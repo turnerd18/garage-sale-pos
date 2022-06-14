@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import { Button, FormControl, IconButton, InputAdornment, InputBase, InputLabel, OutlinedInput, Stack, TextField } from '@mui/material';
-import { CheckCircle, Close, Send } from '@mui/icons-material';
+import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack } from '@mui/material';
+import { CheckCircle, Close } from '@mui/icons-material';
 import { grey } from '@mui/material/colors';
 
 const Item = styled(Box)(({ theme }) => ({

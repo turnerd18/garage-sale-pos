@@ -9,9 +9,7 @@ import { grey } from '@mui/material/colors';
 const Item = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
-  // padding: theme.spacing(1),
   textAlign: 'center',
-  color: theme.palette.text.secondary,
 }));
 
 var formatter = new Intl.NumberFormat('en-US', {
@@ -42,6 +40,14 @@ export default function App() {
     </Button>
   )
 
+  const bucketColorMap = {
+    'Clothes': 'error',
+    'Turner': 'secondary',
+    'Kim': 'success',
+    'Turenne': 'info',
+    'Bulmer': 'warning',
+  }
+
   const submitCustomValue = () => {
     if (!customValue) return
 
@@ -71,11 +77,9 @@ export default function App() {
       <Box sx={{ flexGrow: 1 }} height='100vh'>
 
         <Stack spacing={0} direction="row" justifyContent='center'>
-          <PersonButton person='Clothes' color='error' />
-          <PersonButton person='Turner' color='secondary' />
-          <PersonButton person='Kim' color='success' />
-          <PersonButton person='Turenne' color='info' />
-          <PersonButton person='Bulmer' color='warning' />
+          {Object.entries(bucketColorMap).map(([bucket, color]) =>
+            <PersonButton person={bucket} color={color} />)
+          }
         </Stack>
 
         <Grid container spacing={2} marginTop='10px'>
@@ -138,7 +142,7 @@ export default function App() {
 
           <Grid item xs={4} sx={{ maxHeight: '95vh', overflowY: 'scroll' }}>
             {items.map((item, index) =>
-              <Item key={index}>
+              <Item sx={{color: `${bucketColorMap[item.bucket]}.light`}} key={index}>
                 {item.bucket} {formatter.format(item.amount)}
                 <IconButton
                   color='error'

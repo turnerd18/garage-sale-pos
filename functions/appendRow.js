@@ -1,8 +1,9 @@
 const { google } = require('googleapis');
 const crypto = require('crypto');
+const cors = require('cors')({origin: true});
 
 
-exports.handler = async (req, res) => {
+exports.handler = (req, res) => cors(req, res, async () => {
   const jwt = getJwt();
   const apiKey = process.env.GOOGLE_API_KEY;
   const spreadsheetId = process.env.SPREADSHEET_ID;
@@ -14,7 +15,7 @@ exports.handler = async (req, res) => {
   )
   await appendSheetRow(jwt, apiKey, spreadsheetId, range, rows);
   res.status(200).type('text/plain').end('OK');
-};
+});
 
 function getJwt() {
   const email = process.env.SERVICE_ACCOUNT_EMAIL

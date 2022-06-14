@@ -46,13 +46,22 @@ export default function App() {
     if (!customValue) return
 
     setItems([
-      { person: currentPerson, value: customValue },
+      { bucket: currentPerson, amount: customValue },
       ...items
     ])
     setCustomValue('')
   }
 
   const submitTransaction = () => {
+    fetch('https://us-central1-dtdevel-garge-sale-pos.cloudfunctions.net/appendRow', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ items })
+    })
+
     setItems([])
     setCustomValue('')
   }
@@ -73,16 +82,16 @@ export default function App() {
           <Grid item xs={8}>
 
             <Grid container spacing={1}>
-              {values.map(value =>
-                <Grid item xs={4} key={value}>
+              {values.map(amount =>
+                <Grid item xs={4} key={amount}>
                   <Button
                     onClick={() => setItems([
-                      { person: currentPerson, value },
+                      { bucket: currentPerson, amount },
                       ...items
                     ])
                     }
                   >
-                    {formatter.format(value)}
+                    {formatter.format(amount)}
                   </Button>
                 </Grid>)
               }
@@ -115,7 +124,7 @@ export default function App() {
             </FormControl>
 
             <Stack spacing={2} direction="column" justifyContent='center' textAlign='center'>
-              <b>Total: {formatter.format(items.reduce((sum, item) => sum + item.value, 0))}</b>
+              <b>Total: {formatter.format(items.reduce((sum, item) => sum + item.amount, 0))}</b>
               <Button
                 variant="contained"
                 color='primary'
@@ -130,7 +139,7 @@ export default function App() {
           <Grid item xs={4} sx={{ maxHeight: '95vh', overflowY: 'scroll' }}>
             {items.map((item, index) =>
               <Item key={index}>
-                {item.person} {formatter.format(item.value)}
+                {item.bucket} {formatter.format(item.amount)}
                 <IconButton
                   color='error'
                   onClick={() => setItems([

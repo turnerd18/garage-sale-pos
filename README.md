@@ -32,6 +32,12 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+### `firebase deploy`
+
+- Deploys react app to site hosting.
+- Deploys firebase functions for backend.
+
+
 ### Cloud Functions Linting
 
 To re-enable, add this back to the `firebase.json`

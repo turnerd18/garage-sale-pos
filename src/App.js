@@ -18,11 +18,12 @@ var formatter = new Intl.NumberFormat('en-US', {
 });
 
 const bucketColorMap = {
-  'Clothes': 'error',
-  'Turner': 'secondary',
   'Kim': 'success',
-  'Turenne': 'info',
+  'Nicole': 'secondary',
+  'Clothes': 'error',
+  'Cassie': 'info',
   'Bulmer': 'warning',
+  'Jayne': 'primary'
 }
 
 
@@ -73,9 +74,9 @@ export default function App() {
   return (
     <Box sx={{ flexGrow: 1 }} height='100vh'>
 
-      <Stack spacing={0} direction="row" justifyContent='center'>
+      <Stack spacing={0} direction="row" justifyContent="space-evenly">
         {Object.entries(bucketColorMap).map(([bucket, color]) =>
-          <BucketButton bucket={bucket} color={color} />)
+          <BucketButton bucket={bucket} color={color}/>)
         }
       </Stack>
 
@@ -89,8 +90,7 @@ export default function App() {
                   onClick={() => setItems([
                     { bucket: currentBucket, amount },
                     ...items
-                  ])
-                  }
+                  ])}
                 >
                   {formatter.format(amount)}
                 </Button>

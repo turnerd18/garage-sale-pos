@@ -19,11 +19,11 @@ var formatter = new Intl.NumberFormat('en-US', {
 
 const bucketColorMap = {
   'Kim': 'success',
-  'Nicole': 'secondary',
-  'Clothes': 'error',
-  'Cassie': 'info',
-  'Bulmer': 'warning',
-  'Jayne': 'primary'
+  'NIC': 'secondary',
+  'POT': 'error',
+  'Cas': 'info',
+  'Gma': 'warning',
+  'JT': 'primary'
 }
 
 
@@ -31,6 +31,7 @@ export default function App() {
   const [currentBucket, setBucket] = React.useState('Clothes')
   const [items, setItems] = React.useState([])
   const [customValue, setCustomValue] = React.useState('')
+  const [isSubmitting, setIsSubmitting] = React.useState(false)
 
   const presetAmounts = [0.25, 0.5, 1, 2, 3, 4, 5, 6, 10]
 
@@ -55,6 +56,7 @@ export default function App() {
 
   const submitTransaction = async () => {
     try {
+      setIsSubmitting(true)
       await fetch('https://us-central1-dtdevel-garge-sale-pos.cloudfunctions.net/appendRow', {
         method: 'POST',
         headers: {
@@ -65,6 +67,8 @@ export default function App() {
       })
     } catch {
       return
+    } finally {
+      setIsSubmitting(false)
     }
 
     setItems([])
@@ -129,7 +133,7 @@ export default function App() {
             <Button
               variant="contained"
               color='primary'
-              disabled={!items.length}
+              disabled={!items.length || isSubmitting}
               onClick={submitTransaction}>
               Submit
             </Button>

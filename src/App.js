@@ -18,17 +18,17 @@ var formatter = new Intl.NumberFormat('en-US', {
 });
 
 const bucketColorMap = {
-  'Kim': 'success',
-  'NIC': 'secondary',
+  'Teresa': 'success',
+  'Nicole': 'secondary',
   'POT': 'error',
-  'Cas': 'info',
-  'Gma': 'warning',
-  'JT': 'primary'
+  'Cassie': 'info',
+  // 'Gma': 'warning',
+  // 'JT': 'primary'
 }
 
 
 export default function App() {
-  const [currentBucket, setBucket] = React.useState('Clothes')
+  const [currentBucket, setBucket] = React.useState('POT')
   const [items, setItems] = React.useState([])
   const [customValue, setCustomValue] = React.useState('')
   const [isSubmitting, setIsSubmitting] = React.useState(false)
